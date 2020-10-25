@@ -1,7 +1,10 @@
 package io.work.yourschools.services.Impl;
 
 import io.work.yourschools.entity.Etablissement;
+import io.work.yourschools.entity.Filiere;
+import io.work.yourschools.exceptions.ResourceNotFoundException;
 import io.work.yourschools.repositories.EtablissementRepository;
+import io.work.yourschools.repositories.FiliereRepository;
 import io.work.yourschools.services.EtablissementService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -13,6 +16,8 @@ public class EtablissementServiceImpl implements EtablissementService {
 
     @Autowired
     private EtablissementRepository etablissementRepository;
+    @Autowired
+    private FiliereRepository filiereRepository;
 
     @Override
     public List<Etablissement> getAllEtablissement() {
@@ -27,26 +32,35 @@ public class EtablissementServiceImpl implements EtablissementService {
     @Override
     public Etablissement updateEtablissement(Etablissement etablissement) {
         return etablissementRepository.findById(etablissement.getId())
-                .orElseThrow();
+                .map(etablissement1 -> {
+                    return etablissementRepository.saveAndFlush(etablissement);
+                })
+                .orElseThrow(()-> new ResourceNotFoundException("Etablissement n'existe pas"));
     }
 
     @Override
     public void deleteEtablissement(Long id) {
 
+        etablissementRepository.findById(id)
+                .orElseThrow(()-> new ResourceNotFoundException("L'etablissement n'existe pas"));
+
+        etablissementRepository.deleteById(id);
+
     }
 
     @Override
     public Etablissement findEtablissementByNom(String nom) {
-        return null;
+        return etablissementRepository.findByNomEtablissement(nom);
     }
 
     @Override
-    public Etablissement findEtablissementByAdresse(String adresse) {
-        return null;
+    public List<Etablissement> findAllEtablissementByAdresse(String adresse) {
+        return etablissementRepository.findAllByAdresse(adresse);
     }
 
     @Override
-    public List<Etablissement> findEtablissementByFiliere(String nomFiliere) {
-        return null;
+    public List<Etablissement> findEtablissementByFiliere(Filiere filiere) {
+        return etablissementRepository.findAllByFilieres(filiere);
     }
+
 }

@@ -16,7 +16,7 @@ import java.util.List;
 @Getter
 @Setter
 
-public class Respresentant extends Utilisateur {
+public class Representant extends Utilisateur {
 
     private String fonction;
     @OneToMany(mappedBy = "etablissement")

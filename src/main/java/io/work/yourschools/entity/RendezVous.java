@@ -24,7 +24,7 @@ public class RendezVous {
     private Etablissement etablissement;
     @JsonIgnore
     @ManyToOne
-    private Respresentant respresentant;
+    private Representant representant;
     @JsonIgnore
     @ManyToOne
     private Etudiant etudiant;

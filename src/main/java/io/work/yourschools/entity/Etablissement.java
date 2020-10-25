@@ -28,7 +28,7 @@ public class Etablissement {
     @OneToMany(mappedBy = "etablissement")
     private List<RendezVous> rendezVousList;
     @OneToOne
-    private Respresentant respresentant;
+    private Representant representant;
     @OneToMany(mappedBy = "etablissement")
     private List<Validation> validations;
 }
