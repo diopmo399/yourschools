@@ -29,4 +29,6 @@ public class Etablissement {
     private List<RendezVous> rendezVousList;
     @OneToOne
     private Respresentant respresentant;
+    @OneToMany(mappedBy = "etablissement")
+    private List<Validation> validations;
 }

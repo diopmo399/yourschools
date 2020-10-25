@@ -26,4 +26,6 @@ public class Etudiant extends Etablissement {
     private List<Etablissement> etablissements;
     @OneToMany(mappedBy = "etudiant")
     private List<RendezVous> rendezVousList;
+    @OneToOne(mappedBy = "etudiant")
+    private Validation validation;
 }
